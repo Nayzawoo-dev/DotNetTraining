@@ -29,6 +29,8 @@ namespace DotNetTraining
                 MessageBox.Show("Your Username Or Password Incorrect!");
             }
             MessageBox.Show("successfully Login");
+            AppSetting.CurrentUser = Convert.ToString(dt.Rows[0]["UserName"]);
+            AppSetting.CurrentUserId = Convert.ToInt32((dt.Rows[0]["Id"]));
             txtUsername.Clear();
             txtPassword.Clear();
             txtUsername.Focus();

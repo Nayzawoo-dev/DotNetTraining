@@ -19,31 +19,30 @@ namespace DotNetTraining
             Password = "root",
             TrustServerCertificate = true
         };
-        private SqlConnection Connection()
-        {
-            SqlConnection connection = new SqlConnection(_connectionStringBuilder.ConnectionString);
-            return connection;
-        }
+       
 
         public DataTable Read(string query,params SqlParameter[] parameters)
         {
-            
-            Connection().Open();
-            SqlCommand cmd = new SqlCommand(query,Connection());
+
+            SqlConnection connection = new SqlConnection(_connectionStringBuilder.ConnectionString);
+            connection.Open();
+            SqlCommand cmd = new SqlCommand(query,connection);
             cmd.Parameters.AddRange(parameters);
             SqlDataAdapter adt = new SqlDataAdapter(cmd);
             DataTable dt = new DataTable();
             adt.Fill(dt);
-            Connection().Close();
+            connection.Close();
             return dt;
         }
         public int Execute(string query,params SqlParameter[] parameters)
         {
-            Connection().Open();
-            SqlCommand cmd = new SqlCommand(query, Connection());
+
+            SqlConnection connection = new SqlConnection(_connectionStringBuilder.ConnectionString);
+            connection.Open();
+            SqlCommand cmd = new SqlCommand(query,connection);
             cmd.Parameters.AddRange(parameters);
             int res = cmd.ExecuteNonQuery();
-            Connection().Close();
+            connection.Close();
             return res;
         }
     }
