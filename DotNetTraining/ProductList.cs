@@ -75,6 +75,15 @@ namespace DotNetTraining
                 txtProductquantity.Clear();
                 return;
             }
+
+            
+            if(AppSetting.CurrentUser == null)
+            {
+                MessageBox.Show("You are not Login");
+                return;
+            }
+           
+            
             int res = data.Execute(Query.InsertProduct, new SqlParameter("@ProductName", Name),
                   new SqlParameter("@Price", Price),
                   new SqlParameter("@Quantity", Quantity),

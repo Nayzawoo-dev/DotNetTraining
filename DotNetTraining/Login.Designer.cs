@@ -36,6 +36,8 @@
             checkBox1 = new CheckBox();
             btnCancel = new Button();
             btnLogin = new Button();
+            label4 = new Label();
+            btnGuest = new Button();
             SuspendLayout();
             // 
             // label1
@@ -117,11 +119,34 @@
             btnLogin.UseVisualStyleBackColor = false;
             btnLogin.Click += btnLogin_Click;
             // 
+            // label4
+            // 
+            label4.AutoSize = true;
+            label4.Location = new Point(347, 357);
+            label4.Name = "label4";
+            label4.Size = new Size(25, 20);
+            label4.TabIndex = 8;
+            label4.Text = "Or";
+            // 
+            // btnGuest
+            // 
+            btnGuest.BackColor = Color.Black;
+            btnGuest.ForeColor = Color.White;
+            btnGuest.Location = new Point(208, 393);
+            btnGuest.Name = "btnGuest";
+            btnGuest.Size = new Size(307, 54);
+            btnGuest.TabIndex = 9;
+            btnGuest.Text = "Guest Account";
+            btnGuest.UseVisualStyleBackColor = false;
+            btnGuest.Click += btnGuest_Click;
+            // 
             // Login
             // 
             AutoScaleDimensions = new SizeF(8F, 20F);
             AutoScaleMode = AutoScaleMode.Font;
             ClientSize = new Size(800, 613);
+            Controls.Add(btnGuest);
+            Controls.Add(label4);
             Controls.Add(btnLogin);
             Controls.Add(btnCancel);
             Controls.Add(checkBox1);
@@ -149,5 +174,7 @@
         private CheckBox checkBox1;
         private Button btnCancel;
         private Button btnLogin;
+        private Label label4;
+        private Button btnGuest;
     }
 }

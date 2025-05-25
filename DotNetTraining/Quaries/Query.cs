@@ -9,7 +9,10 @@ namespace DotNetTraining.Quaries
 {
     internal class Query
     {
-        public static string UserLogin { get;} = "select * from Tbl_Window where UserName = @Username and Password = @Password";
+        public static string UserLogin { get;} = "select * from Tbl_Window where UserName = @Username";
+        public static string UserLogin2 { get; } = "select * from Tbl_Window where  Password = @Password";
+
+        //public static string Validate { get; set; } = "select * from Tbl_Window where UserName = @Username and Password = @Password";
         public static string ProductList { get; } = "select * from Tbl_Productlist";
 
         public static string InsertProduct { get; } = @"INSERT INTO [dbo].[Tbl_Productlist]

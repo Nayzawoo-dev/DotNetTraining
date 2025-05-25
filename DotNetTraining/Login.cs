@@ -21,16 +21,31 @@ namespace DotNetTraining
         private void btnLogin_Click(object sender, EventArgs e)
         {
             string username = txtUsername.Text;
-            string password = txtPassword.Text.Trim();
-            DataTable dt = data.Read(Query.UserLogin, new SqlParameter("@Username", username), new SqlParameter("@Password", password));
+            DataTable dt = data.Read(Query.UserLogin, new SqlParameter("@Username", username));
             if (dt.Rows.Count == 0)
             {
-
-                MessageBox.Show("Your Username Or Password Incorrect!");
+                MessageBox.Show("Incorrect Username!", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                txtUsername.Clear();
+                return;
             }
+            string password = txtPassword.Text.Trim();
+            DataTable dt2 = data.Read(Query.UserLogin2, new SqlParameter("@Password", password));
+            if (dt2.Rows.Count == 0)
+            {
+                MessageBox.Show("Incorrect Password!", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                txtPassword.Clear();
+                return;
+            }
+
+            //DataTable dt = data.Read(Query.UserLogin, new SqlParameter("@Username", username), new SqlParameter("@Password", password));
+            //if (dt.Rows.Count == 0)
+            //{
+
+            //    MessageBox.Show("Your Username Or Password Incorrect!");
+            //}
             MessageBox.Show("successfully Login");
             AppSetting.CurrentUser = Convert.ToString(dt.Rows[0]["UserName"]);
-            AppSetting.CurrentUserId = Convert.ToInt32((dt.Rows[0]["Id"]));
+            AppSetting.CurrentUserId = Convert.ToInt32(dt.Rows[0]["Id"]);
             txtUsername.Clear();
             txtPassword.Clear();
             txtUsername.Focus();
@@ -67,6 +82,11 @@ namespace DotNetTraining
         {
             txtUsername.Clear();
             txtPassword.Clear();
+        }
+
+        private void btnGuest_Click(object sender, EventArgs e)
+        {
+            product.ShowDialog();
         }
     }
 }
