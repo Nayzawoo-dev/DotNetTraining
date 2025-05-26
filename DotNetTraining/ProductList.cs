@@ -55,8 +55,8 @@ namespace DotNetTraining
         private void btnSave_Click(object sender, EventArgs e)
         {
             string Name = txtProductname.Text;
-            DataTable dt = data.Read(Query.invalidName,new SqlParameter("@ProductName",Name));
-            if(dt.Rows.Count > 0)
+            DataTable dt = data.Read(Query.invalidName, new SqlParameter("@ProductName", Name));
+            if (dt.Rows.Count > 0)
             {
                 MessageBox.Show("Invalid Product Name");
                 txtProductname.Clear();
@@ -66,9 +66,9 @@ namespace DotNetTraining
             }
             string Price = txtProductprice.Text.Trim();
             string Quantity = txtProductquantity.Text.Trim();
-            bool qua = int.TryParse(Quantity,out int quantity);
+            bool qua = int.TryParse(Quantity, out int quantity);
             bool price = decimal.TryParse(Price, out decimal pice);
-            if(qua == false || price == false)
+            if (qua == false || price == false)
             {
                 MessageBox.Show("Invalid Quantity Or Price");
                 txtProductprice.Clear();
@@ -76,20 +76,21 @@ namespace DotNetTraining
                 return;
             }
 
-            
-            if(AppSetting.CurrentUser == null)
+
+            if (AppSetting.CurrentUser == null)
             {
                 MessageBox.Show("You are not Login");
+                Clear();
                 return;
             }
-           
-            
+
+
             int res = data.Execute(Query.InsertProduct, new SqlParameter("@ProductName", Name),
                   new SqlParameter("@Price", Price),
                   new SqlParameter("@Quantity", Quantity),
                   new SqlParameter("@CreatedDateTime", DateTime.Now),
                   new SqlParameter("@CreatedByName", AppSetting.CurrentUser),
-                  new SqlParameter("@CreatedById",AppSetting.CurrentUserId));
+                  new SqlParameter("@CreatedById", AppSetting.CurrentUserId));
             string message = res > 0 ? "Insert Successful" : "Insert Failed";
             MessageBox.Show(message, "Inventory Management System!", MessageBoxButtons.OK, MessageBoxIcon.Information);
             Clear();
@@ -127,6 +128,15 @@ namespace DotNetTraining
 
         private void txtProductquantity_TextChanged(object sender, EventArgs e)
         {
+        }
+
+        private void button1_Click(object sender, EventArgs e)
+        { 
+            this.Hide();
+            AppSetting.CurrentUser = null;
+            AppSetting.CurrentUserId = null;
+            Login login = new Login();
+            login.ShowDialog();
         }
     }
 }

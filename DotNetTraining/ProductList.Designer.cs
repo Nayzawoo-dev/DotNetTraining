@@ -29,6 +29,9 @@
         private void InitializeComponent()
         {
             dgvData = new DataGridView();
+            colProductName = new DataGridViewTextBoxColumn();
+            colProductPrice = new DataGridViewTextBoxColumn();
+            colProductQuantity = new DataGridViewTextBoxColumn();
             label1 = new Label();
             txtProductname = new TextBox();
             label2 = new Label();
@@ -37,9 +40,7 @@
             txtProductquantity = new TextBox();
             btnCancel = new Button();
             btnSave = new Button();
-            colProductName = new DataGridViewTextBoxColumn();
-            colProductPrice = new DataGridViewTextBoxColumn();
-            colProductQuantity = new DataGridViewTextBoxColumn();
+            button1 = new Button();
             ((System.ComponentModel.ISupportInitialize)dgvData).BeginInit();
             SuspendLayout();
             // 
@@ -56,6 +57,33 @@
             dgvData.RowHeadersWidth = 51;
             dgvData.Size = new Size(1009, 303);
             dgvData.TabIndex = 0;
+            // 
+            // colProductName
+            // 
+            colProductName.DataPropertyName = "ProductName";
+            colProductName.HeaderText = "Product Name";
+            colProductName.MinimumWidth = 6;
+            colProductName.Name = "colProductName";
+            colProductName.ReadOnly = true;
+            colProductName.Width = 125;
+            // 
+            // colProductPrice
+            // 
+            colProductPrice.DataPropertyName = "Price";
+            colProductPrice.HeaderText = "Product Price";
+            colProductPrice.MinimumWidth = 6;
+            colProductPrice.Name = "colProductPrice";
+            colProductPrice.ReadOnly = true;
+            colProductPrice.Width = 125;
+            // 
+            // colProductQuantity
+            // 
+            colProductQuantity.DataPropertyName = "Quantity";
+            colProductQuantity.HeaderText = "Product Quantity";
+            colProductQuantity.MinimumWidth = 6;
+            colProductQuantity.Name = "colProductQuantity";
+            colProductQuantity.ReadOnly = true;
+            colProductQuantity.Width = 125;
             // 
             // label1
             // 
@@ -134,38 +162,24 @@
             btnSave.UseVisualStyleBackColor = false;
             btnSave.Click += btnSave_Click;
             // 
-            // colProductName
+            // button1
             // 
-            colProductName.DataPropertyName = "ProductName";
-            colProductName.HeaderText = "Product Name";
-            colProductName.MinimumWidth = 6;
-            colProductName.Name = "colProductName";
-            colProductName.ReadOnly = true;
-            colProductName.Width = 125;
-            // 
-            // colProductPrice
-            // 
-            colProductPrice.DataPropertyName = "Price";
-            colProductPrice.HeaderText = "Product Price";
-            colProductPrice.MinimumWidth = 6;
-            colProductPrice.Name = "colProductPrice";
-            colProductPrice.ReadOnly = true;
-            colProductPrice.Width = 125;
-            // 
-            // colProductQuantity
-            // 
-            colProductQuantity.DataPropertyName = "Quantity";
-            colProductQuantity.HeaderText = "Product Quantity";
-            colProductQuantity.MinimumWidth = 6;
-            colProductQuantity.Name = "colProductQuantity";
-            colProductQuantity.ReadOnly = true;
-            colProductQuantity.Width = 125;
+            button1.BackColor = Color.Black;
+            button1.ForeColor = Color.White;
+            button1.Location = new Point(871, 6);
+            button1.Name = "button1";
+            button1.Size = new Size(126, 42);
+            button1.TabIndex = 9;
+            button1.Text = "Logout";
+            button1.UseVisualStyleBackColor = false;
+            button1.Click += button1_Click;
             // 
             // ProductList
             // 
             AutoScaleDimensions = new SizeF(8F, 20F);
             AutoScaleMode = AutoScaleMode.Font;
             ClientSize = new Size(1009, 660);
+            Controls.Add(button1);
             Controls.Add(btnSave);
             Controls.Add(btnCancel);
             Controls.Add(txtProductquantity);
@@ -198,5 +212,6 @@
         private DataGridViewTextBoxColumn colProductName;
         private DataGridViewTextBoxColumn colProductPrice;
         private DataGridViewTextBoxColumn colProductQuantity;
+        private Button button1;
     }
 }
