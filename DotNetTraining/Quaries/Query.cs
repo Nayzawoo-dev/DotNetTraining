@@ -33,5 +33,11 @@ namespace DotNetTraining.Quaries
         public static string joinQuery { get; } = @"select * from Tbl_Productlist P inner join Tbl_Window W on W.Id = P.CreatedById";
 
         public static string? WantedQuery { get; set; } = @"select ProductId, ProductCode,ProductName,Price,Quantity,CreatedDateTime,CreatedByName,W.UserName as Account_Name from Tbl_Productlist P inner join Tbl_Window W on W.Id = P.CreatedById";
+
+        public static string UpdateQuery { get; set; } = @"UPDATE [dbo].[Tbl_Productlist]
+   SET
+       [Price] = @Price
+      ,[Quantity] = @Quantity
+ WHERE ProductId = @ProductId";
     }
 }

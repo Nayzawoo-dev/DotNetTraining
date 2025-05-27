@@ -14,6 +14,9 @@ namespace DotNetTraining
             InitializeComponent();
             data = new Data();
             product = new Product();
+            txtUsername.Text = "Nay Zaw Oo";
+            txtPassword.Text = "12009";
+            
         }
 
         private void btnLogin_Click(object sender, EventArgs e)

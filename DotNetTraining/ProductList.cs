@@ -18,6 +18,7 @@ namespace DotNetTraining
     public partial class ProductList : Form
     {
         Data data;
+        String ProductId = string.Empty;
         public ProductList()
         {
             InitializeComponent();
@@ -107,15 +108,16 @@ namespace DotNetTraining
         }
         public void Clear()
         {
-            txtProductname.Clear();
-            txtProductprice.Clear();
-            txtProductquantity.Clear();
+            this.Controls.OfType<TextBox>().ToList().ForEach(tb => tb.Clear());
+
         }
 
         private void btnCancel_Click(object sender, EventArgs e)
         {
             Clear();
             txtProductname.Focus();
+            btnUpdate.Visible = false;
+            btnSave.Visible = true;
         }
 
         private void txtProductprice_KeyPress(object sender, KeyPressEventArgs e)
@@ -131,12 +133,92 @@ namespace DotNetTraining
         }
 
         private void button1_Click(object sender, EventArgs e)
-        { 
+        {
             this.Hide();
             AppSetting.CurrentUser = null;
             AppSetting.CurrentUserId = null;
             Login login = new Login();
             login.ShowDialog();
+        }
+
+        private void dgvData_CellContentClick(object sender, DataGridViewCellEventArgs e)
+        {
+            int row = e.RowIndex;
+            int col = e.ColumnIndex;
+
+            string? id = dgvData.Rows[e.RowIndex].Cells["colProductId"].Value.ToString();
+            ProductId = id!;
+
+            if (col == 0)
+            {
+               
+                DataTable dt = data.Read("select * from Tbl_Productlist where ProductId = @ProductId",new SqlParameter("@ProductId",id));
+                AppSetting.CurrentProductName =  txtProductname.Text = dt.Rows[0]["ProductName"].ToString();
+                txtProductprice.Text = dt.Rows[0]["Price"].ToString();
+                txtProductquantity.Text = dt.Rows[0]["Quantity"].ToString();
+                //txtProductprice.Text = dgvData.Rows[e.RowIndex].Cells["colProductPrice"].Value.ToString();
+                //txtProductquantity.Text = dgvData.Rows[e.RowIndex].Cells["colProductQuantity"].Value.ToString();
+                btnUpdate.Visible = true;
+                btnSave.Visible = false;
+            }
+            else if (col == 1) 
+            {
+              var  res =  MessageBox.Show("Are You Sure Want To Delete (Yes Or No)?", "Inventory Management System", MessageBoxButtons.YesNo);
+                if (res == DialogResult.Yes)
+                {
+                    int del = data.Execute(@"DELETE FROM Tbl_Productlist
+                    WHERE ProductId = @ProductId", new SqlParameter("@ProductId", ProductId));
+
+                    if(del > 0)
+                    {
+                        MessageBox.Show("Delete Successful!");
+                    }
+                    ShowData();
+                } else if(res == DialogResult.No)
+                {
+                    return;
+                }
+              
+
+            }
+           
+
+        }
+
+        private void btnUpdate_Click(object sender, EventArgs e)
+        {
+            if (AppSetting.CurrentUser == null && AppSetting.CurrentUserId == null) {
+                MessageBox.Show("You are not Login");
+                return;
+            }
+     
+            string? productname = txtProductname.Text;
+            if(productname != AppSetting.CurrentProductName)
+            {
+                MessageBox.Show("You can not change product name");
+                txtProductname.Text = AppSetting.CurrentProductName;
+            }
+
+
+            string productprice = txtProductprice.Text;
+            bool price = decimal.TryParse(productprice, out decimal pric);
+            string productquantity = txtProductquantity.Text;
+            bool quantity = int.TryParse(productquantity, out int quan);
+            if(price == false || quantity == false)
+            {
+                MessageBox.Show("Invalid Price or Quantity!");
+            }
+
+            int update =   data.Execute(Query.UpdateQuery, new SqlParameter("@Price", productprice), new SqlParameter("@Quantity",productquantity),new SqlParameter("@ProductId",ProductId));
+            if(update > 0)
+            {
+                MessageBox.Show("Update Successful!");
+            }
+            ProductId = string.Empty;
+            Clear();
+            ShowData();
+            btnUpdate.Visible = false;
+            btnSave.Visible = true;
         }
     }
 }

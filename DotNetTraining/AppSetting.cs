@@ -10,6 +10,8 @@ namespace DotNetTraining
     {
         public static string? CurrentUser { get; set; }
         public static int? CurrentUserId { get; set; }
+
+        public static string? CurrentProductName { get; set; }
        
     }
 }
