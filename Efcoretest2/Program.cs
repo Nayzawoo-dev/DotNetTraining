@@ -22,11 +22,9 @@ db.TblProductlists.Remove(item);
 db.SaveChanges();
 Console.WriteLine("Hello, World!");
 
-var item2 = db.TblWindows.Where(x => x.UserName == "Ya Na").FirstOrDefault();
-if(item2 != null)
-{
-    item2.UserName = "Khoon Shoon";
-}
+var item2 = db.TblWindows.Where(x => x.UserName == "Khoon Shoon").FirstOrDefault();
+db.TblWindows.Remove(item2);
 db.SaveChanges();
+
 
 
